@@ -65,12 +65,12 @@ macd_hist = json.loads(df.rename(columns={"MACD_6_12_5": "value"}).to_json(orien
 df['returns'] = df.close.pct_change()
 df = df.dropna()
 df["cumalative returns"] = (1+df.returns).cumprod()
-ret = (1+df['returns']).prod()-1
-vol = df.returns.std()
-sharpe_ratio = (ret-0.04**(1/2))/vol
+ret = round((1+df['returns']).prod()-1,1000) * 100 
+vol =  round(df.returns.std(),100)
+sharpe_ratio = round((ret-0.04**(1/2))/vol,10)
 
 col1, col2, col3 = st.columns(3)
-col1.metric("Returns", ret)
+col1.metric("Returns", str(ret)+"%" )
 col2.metric("Volatility", vol)
 col3.metric("Sharpe_ratio", sharpe_ratio)
 
