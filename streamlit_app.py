@@ -78,6 +78,7 @@ with col[0]:
                  column_order=("Returns","Volatility","Sharpe Ratio" ),
                  hide_index=True,
                  width=None,)
+    at.dataframe(df.head())
     col1, col2, col3 = st.columns(3)
     col1.metric("Returns", str(ret)+"%" )
     col2.metric("Volatility", vol)
