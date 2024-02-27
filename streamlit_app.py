@@ -56,8 +56,8 @@ df = read_yf(Ticker)
 
 #Calculating the Metrics 
 # Calculate the MAs for graphs
-df['SMA-50'] = df['Close'].rolling(50).mean().dropna()
-df['SMA-200'] = df['Close'].rolling(200).mean().dropna()
+df['SMA-50'] = df['close'].rolling(50).mean().dropna()
+df['SMA-200'] = df['close'].rolling(200).mean().dropna()
 
 df['returns'] = df.close.pct_change()
 df.dropna(inplace = True)
