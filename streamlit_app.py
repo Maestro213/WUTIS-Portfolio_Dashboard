@@ -62,10 +62,11 @@ macd_slow = json.loads(df.rename(columns={"MACDs_6_12_5": "value"}).to_json(orie
 df['color'] = np.where(  df['MACD_6_12_5'] > 0, COLOR_BULL, COLOR_BEAR)  # MACD histogram color
 macd_hist = json.loads(df.rename(columns={"MACD_6_12_5": "value"}).to_json(orient = "records"))
 
+#Calculating the Metrics 
 df['returns'] = df.close.pct_change()
 df.dropna(inplace = True)
 df['cumalative returns'] = (1+df.returns).cumprod()
-ret = round((1+df.returns).prod()-1,1000) * 100 
+ret = (1+df.returns).prod() #round((1+df.returns).prod()-1,1000) * 100 
 vol =  round(df.returns.std(),100)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,10)
 
