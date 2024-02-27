@@ -26,7 +26,7 @@ Department = st.sidebar.selectbox('Department', d, index=0)
     
 COLOR_BULL = 'rgba(38,166,154,0.9)' # #26a69a
 COLOR_BEAR = 'rgba(239,83,80,0.9)'  # #ef5350
-Ticker = 'SPX'
+Ticker = 'QQQ'
 
 def read_yf(Ticker):
     # print('Start date: {}'.format(start_date))
