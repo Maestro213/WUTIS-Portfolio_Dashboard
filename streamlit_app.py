@@ -62,7 +62,7 @@ ret = round((1+df.returns).prod()-1,4) * 100
 vol =  round(df.returns.std(),2)
 rf = 0.04**(1/2)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,2)
-met = pd.DataFrame([ret,vol,sharpe_ratio],columns=["Returns","Volatility","Sharpe Ratio" ])
+met = pd.DataFrame({"Returns":ret, "Volatility":vol,"Sharpe Ratio": sharpe_ratio})
 
 #######################
 # Dashboard Main Panel
