@@ -62,7 +62,7 @@ ret = round((1+df.returns).prod()-1,4) * 100
 vol =  round(df.returns.std(),2)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,2)
 
-col = st.columns((2, 5), gap='medium')
+col = st.columns((4, 6), gap='medium')
 with col[0]:
     col1, col2, col3 = st.columns(3)
     col1.metric("Returns", str(ret)+"%" )
