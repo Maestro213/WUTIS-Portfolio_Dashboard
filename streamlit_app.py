@@ -60,10 +60,20 @@ df.dropna(inplace = True)
 df['cumalative returns'] = (1+df.returns).cumprod()
 ret = round((1+df.returns).prod()-1,4) * 100 
 vol =  round(df.returns.std(),2)
+rf = 0.04**(1/2)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,2)
+met = pd.DataFrame([ret,vol,sharpe_ratio],columns=["Returns","Volatility","Sharpe Ratio" ])
 
-col = st.columns((4, 6), gap='medium')
+#######################
+# Dashboard Main Panel
+col = st.columns((8, 12), gap='medium')
 with col[0]:
+    st.markdown('#### Perfomance')
+
+    st.dataframe(met,
+                 column_order=("Returns","Volatility","Sharpe Ratio" ),
+                 hide_index=True,
+                 width=None,)
     col1, col2, col3 = st.columns(3)
     col1.metric("Returns", str(ret)+"%" )
     col2.metric("Volatility", vol)
