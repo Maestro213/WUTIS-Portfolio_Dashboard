@@ -7,3 +7,4 @@ matplotlib
 streamlit_lightweight_charts 
 pandas_ta
 streamlit_lottie
+plotly
