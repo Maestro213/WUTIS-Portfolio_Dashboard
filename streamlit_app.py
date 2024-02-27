@@ -65,7 +65,7 @@ macd_hist = json.loads(df.rename(columns={"MACD_6_12_5": "value"}).to_json(orien
 df['returns'] = df.close.pct_change()
 df = df.dropna()
 df["cumalative returns"] = (1+df.returns).cumprod()
-ret = round((1+df['returns']).prod()-1,1000) * 100 
+ret = round((1+df.returns).prod()-1,1000) * 100 
 vol =  round(df.returns.std(),100)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,10)
 
