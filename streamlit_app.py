@@ -58,11 +58,11 @@ df = read_yf(Ticker)
 df['returns'] = df.close.pct_change()
 df.dropna(inplace = True)
 df['cumalative returns'] = (1+df.returns).cumprod()
-ret = (1+df.returns).prod() #round((1+df.returns).prod()-1,1000) * 100 
-vol =  round(df.returns.std(),100)
-sharpe_ratio = round((ret-0.04**(1/2))/vol,10)
+ret = round((1+df.returns).prod()-1,4) * 100 
+vol =  round(df.returns.std(),2)
+sharpe_ratio = round((ret-0.04**(1/2))/vol,2)
 
-col = st.columns((1.5, 4.5), gap='medium')
+col = st.columns((2, 5), gap='medium')
 with col[0]:
     col1, col2, col3 = st.columns(3)
     col1.metric("Returns", str(ret)+"%" )
