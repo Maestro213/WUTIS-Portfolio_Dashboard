@@ -15,9 +15,9 @@ st.sidebar.header("WUTIS Investmnt Strategies")
 d = ["General", "Equity Research", "Global Markets", "Algorithmic Trading"]
 Department = st.sidebar.selectbox('Department', d, index=0)
 
-Ticker = "WAC"
+Ticker = "MSFT"
 
-def read_yf(yf_data, start_date):
+def read_yf(Ticker):
     # print('Start date: {}'.format(start_date))
     df = pd.DataFrame()
     try:
@@ -40,8 +40,7 @@ def read_yf(yf_data, start_date):
     return df
 
 
-df = yf.Ticker(Ticker).history(period='6mo')[['Open', 'High', 'Low', 'Close', 'Volume']]
-
+df = read_yf(Ticker)
 
 
 candles = json.loads(df.to_json(orient = "records"))
