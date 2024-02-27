@@ -15,8 +15,16 @@ import yfinance as yf
 st.sidebar.header("WUTIS Investmnt Strategies")
 d = ["General", "Equity Research", "Global Markets", "Algorithmic Trading"]
 Department = st.sidebar.selectbox('Department', d, index=0)
-
-Ticker = "MSFT"
+if Department=="General":
+    Ticker = "MSFT"
+elif  Department=="Equity Research":
+    Ticker = "SPY"
+elif  Department=="Global Markets":
+    Ticker = "TSLA"
+else:
+    Ticker = "QQQ"
+    
+    
 COLOR_BULL = 'rgba(38,166,154,0.9)' # #26a69a
 COLOR_BEAR = 'rgba(239,83,80,0.9)'  # #ef5350
 
