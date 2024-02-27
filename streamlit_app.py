@@ -62,6 +62,18 @@ macd_slow = json.loads(df.rename(columns={"MACDs_6_12_5": "value"}).to_json(orie
 df['color'] = np.where(  df['MACD_6_12_5'] > 0, COLOR_BULL, COLOR_BEAR)  # MACD histogram color
 macd_hist = json.loads(df.rename(columns={"MACD_6_12_5": "value"}).to_json(orient = "records"))
 
+df['returns'] = df.close.pct_change()
+df = dr.dropna()
+df["cumalative returns"] = (1+df.returns).cumprod()
+ret = (1+df['returns']).prod()-1
+vol = df.returns.std()
+sharpe_ratio = (ret-0.04**(1/2))/vol
+
+col1, col2, col3 = st.columns(3)
+col1.metric("Returns", ret)
+col2.metric("Volatility", vol)
+col3.metric("Sharpe_ratio", sharpe_ratio)
+
 chartMultipaneOptions = [
     {
         "width": 600,
