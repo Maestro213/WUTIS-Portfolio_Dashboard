@@ -52,8 +52,9 @@ def read_yf(Ticker):
 
 
 df = read_yf(Ticker)
-
-
+if df.empty:
+    df = pd.read_csv(r'data/ER.csv')
+    
 #Calculating the Metrics 
 # Calculate the MAs for graphs
 df['SMA-50'] = df['close'].rolling(50).mean().dropna()
