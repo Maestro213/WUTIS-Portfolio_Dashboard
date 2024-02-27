@@ -9,21 +9,19 @@ from datetime import datetime
 import altair as alt
 from streamlit_lottie import st_lottie
 import yfinance as yf
+# For plotting
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
+
+st.set_page_config(layout='wide', page_title='Stock Dashboard', page_icon=':dollar:')
 
 #######################
 # Sidebar
 st.sidebar.header("WUTIS Investmnt Strategies")
 d = ["General", "Equity Research", "Global Markets", "Algorithmic Trading"]
 Department = st.sidebar.selectbox('Department', d, index=0)
-if Department=="General":
-    Ticker = "MSFT"
-elif  Department=="Equity Research":
-    Ticker = "SPY"
-elif  Department=="Global Markets":
-    Ticker = "TSLA"
-else:
-    Ticker = "QQQ"
+
     
     
 COLOR_BULL = 'rgba(38,166,154,0.9)' # #26a69a
@@ -54,7 +52,13 @@ def read_yf(Ticker):
 
 
 df = read_yf(Ticker)
+
+
 #Calculating the Metrics 
+# Calculate the MAs for graphs
+df['SMA-50'] = df['Close'].rolling(50).mean().dropna()
+df['SMA-200'] = df['Close'].rolling(200).mean().dropna()
+
 df['returns'] = df.close.pct_change()
 df.dropna(inplace = True)
 df['cumalative returns'] = (1+df.returns).cumprod()
