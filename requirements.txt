@@ -1,1 +1,9 @@
-
+streamlit
+pandas
+scikit_learn
+numpy
+yfinance
+matplotlib
+streamlit_lightweight_charts 
+pandas_ta
+streamlit_lottie
