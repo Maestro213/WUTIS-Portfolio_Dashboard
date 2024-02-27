@@ -17,14 +17,32 @@ Department = st.sidebar.selectbox('Department', d, index=0)
 
 Ticker = "WAC"
 
+def read_yf(yf_data, start_date):
+    # print('Start date: {}'.format(start_date))
+    df = pd.DataFrame()
+    try:
+        df = yf.Ticker(Ticker).history(period='6mo')[['Open', 'High', 'Low', 'Close', 'Volume']]
+        
+    except Exception as e:
+        print("The error is: ", e)
+    if not df.empty:
+        # Create a Date column
+        df['Date'] = df.index.date
+        # Drop the Date as index
+        df.reset_index(drop=True, inplace=True)
+        # Some data wrangling to match required format
+        df.columns = ['time','open','high','low','close','volume']                  # rename columns
+        df['color'] = np.where(  df['open'] > df['close'], COLOR_BEAR, COLOR_BULL)  # bull or bear
+        df.ta.macd(close='close', fast=6, slow=12, signal=5, append=True)           # calculate macd
+        # Added extra columns
+        #df['Ticker'] = st.session_state.ticker
+        df['Refreshed Date'] = datetime.now()
+    return df
+
+
 df = yf.Ticker(Ticker).history(period='6mo')[['Open', 'High', 'Low', 'Close', 'Volume']]
 
-# Some data wrangling to match required format
-df = df.reset_index()
-df.columns = ['time','open','high','low','close','volume']                  # rename columns
-df['time'] = df['time'].dt.strftime('%Y-%m-%d')                             # Date to string
-df['color'] = np.where(  df['open'] > df['close'], COLOR_BEAR, COLOR_BULL)  # bull or bear
-df.ta.macd(close='close', fast=6, slow=12, signal=5, append=True)           # calculate macd
+
 
 candles = json.loads(df.to_json(orient = "records"))
 volume = json.loads(df.rename(columns={"volume": "value",}).to_json(orient = "records"))
