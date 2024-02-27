@@ -11,7 +11,8 @@ from streamlit_lottie import st_lottie
 import yfinance as yf
 
 
-
+#######################
+# Sidebar
 st.sidebar.header("WUTIS Investmnt Strategies")
 d = ["General", "Equity Research", "Global Markets", "Algorithmic Trading"]
 Department = st.sidebar.selectbox('Department', d, index=0)
@@ -53,15 +54,6 @@ def read_yf(Ticker):
 
 
 df = read_yf(Ticker)
-
-print(df.head())
-candles = json.loads(df.to_json(orient = "records"))
-volume = json.loads(df.rename(columns={"volume": "value",}).to_json(orient = "records"))
-macd_fast = json.loads(df.rename(columns={"MACDh_6_12_5": "value"}).to_json(orient = "records"))
-macd_slow = json.loads(df.rename(columns={"MACDs_6_12_5": "value"}).to_json(orient = "records"))
-df['color'] = np.where(  df['MACD_6_12_5'] > 0, COLOR_BULL, COLOR_BEAR)  # MACD histogram color
-macd_hist = json.loads(df.rename(columns={"MACD_6_12_5": "value"}).to_json(orient = "records"))
-
 #Calculating the Metrics 
 df['returns'] = df.close.pct_change()
 df.dropna(inplace = True)
@@ -70,176 +62,189 @@ ret = (1+df.returns).prod() #round((1+df.returns).prod()-1,1000) * 100
 vol =  round(df.returns.std(),100)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,10)
 
-col1, col2, col3 = st.columns(3)
-col1.metric("Returns", str(ret)+"%" )
-col2.metric("Volatility", vol)
-col3.metric("Sharpe_ratio", sharpe_ratio)
+col = st.columns((1.5, 4.5), gap='medium')
+with col[0]:
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Returns", str(ret)+"%" )
+    col2.metric("Volatility", vol)
+    col3.metric("Sharpe_ratio", sharpe_ratio)
 
-chartMultipaneOptions = [
-    {
-        "width": 600,
-        "height": 400,
-        "layout": {
-            "background": {
-                "type": "solid",
-                "color": 'transparent'
-            },
-            "textColor": "white"
-        },
-        "grid": {
-            "vertLines": {
-                "color": "rgba(197, 203, 206, 0.5)"
+#######################
+# Plot
+with col[1]:
+    candles = json.loads(df.to_json(orient = "records"))
+    volume = json.loads(df.rename(columns={"volume": "value",}).to_json(orient = "records"))
+    macd_fast = json.loads(df.rename(columns={"MACDh_6_12_5": "value"}).to_json(orient = "records"))
+    macd_slow = json.loads(df.rename(columns={"MACDs_6_12_5": "value"}).to_json(orient = "records"))
+    df['color'] = np.where(  df['MACD_6_12_5'] > 0, COLOR_BULL, COLOR_BEAR)  # MACD histogram color
+    macd_hist = json.loads(df.rename(columns={"MACD_6_12_5": "value"}).to_json(orient = "records"))
+    
+    
+    chartMultipaneOptions = [
+        {
+            "width": 600,
+            "height": 400,
+            "layout": {
+                "background": {
+                    "type": "solid",
+                    "color": 'transparent'
                 },
-            "horzLines": {
-                "color": "rgba(197, 203, 206, 0.5)"
+                "textColor": "white"
+            },
+            "grid": {
+                "vertLines": {
+                    "color": "rgba(197, 203, 206, 0.5)"
+                    },
+                "horzLines": {
+                    "color": "rgba(197, 203, 206, 0.5)"
+                }
+            },
+            "crosshair": {
+                "mode": 0
+            },
+            "priceScale": {
+                "borderColor": "rgba(197, 203, 206, 0.8)"
+            },
+            "timeScale": {
+                "borderColor": "rgba(197, 203, 206, 0.8)",
+                "barSpacing": 15
+            },
+            "watermark": {
+                "visible": True,
+                "fontSize": 48,
+                "horzAlign": 'center',
+                "vertAlign": 'center',
+                "color": 'rgba(171, 71, 188, 0.3)',
+                "text": f'{Ticker}',
             }
         },
-        "crosshair": {
-            "mode": 0
-        },
-        "priceScale": {
-            "borderColor": "rgba(197, 203, 206, 0.8)"
-        },
-        "timeScale": {
-            "borderColor": "rgba(197, 203, 206, 0.8)",
-            "barSpacing": 15
-        },
-        "watermark": {
-            "visible": True,
-            "fontSize": 48,
-            "horzAlign": 'center',
-            "vertAlign": 'center',
-            "color": 'rgba(171, 71, 188, 0.3)',
-            "text": f'{Ticker}',
-        }
-    },
-    {
-        "width": 600,
-        "height": 100,
-        "layout": {
-            "background": {
-                "type": 'solid',
-                "color": 'transparent'
+        {
+            "width": 600,
+            "height": 100,
+            "layout": {
+                "background": {
+                    "type": 'solid',
+                    "color": 'transparent'
+                },
+                "textColor": 'white',
             },
-            "textColor": 'white',
-        },
-        "grid": {
-            "vertLines": {
-                "color": 'rgba(42, 46, 57, 0)',
+            "grid": {
+                "vertLines": {
+                    "color": 'rgba(42, 46, 57, 0)',
+                },
+                "horzLines": {
+                    "color": 'rgba(42, 46, 57, 0.6)',
+                }
             },
-            "horzLines": {
-                "color": 'rgba(42, 46, 57, 0.6)',
+            "timeScale": {
+                "visible": False,
+            },
+            "watermark": {
+                "visible": True,
+                "fontSize": 18,
+                "horzAlign": 'left',
+                "vertAlign": 'top',
+                "color": 'rgba(171, 71, 188, 0.7)',
+                "text": 'Volume',
             }
         },
-        "timeScale": {
-            "visible": False,
-        },
-        "watermark": {
-            "visible": True,
-            "fontSize": 18,
-            "horzAlign": 'left',
-            "vertAlign": 'top',
-            "color": 'rgba(171, 71, 188, 0.7)',
-            "text": 'Volume',
-        }
-    },
-    {
-        "width": 600,
-        "height": 200,
-        "layout": {
-            "background": {
-                "type": "solid",
-                "color": 'transparent'
+        {
+            "width": 600,
+            "height": 200,
+            "layout": {
+                "background": {
+                    "type": "solid",
+                    "color": 'transparent'
+                },
+                "textColor": "white"
             },
-            "textColor": "white"
-        },
-        "timeScale": {
-            "visible": False,
-        },
-        "watermark": {
-            "visible": True,
-            "fontSize": 18,
-            "horzAlign": 'left',
-            "vertAlign": 'center',
-            "color": 'rgba(171, 71, 188, 0.7)',
-            "text": 'MACD',
-        }
-    }
-]
-
-seriesCandlestickChart = [
-    {
-        "type": 'Candlestick',
-        "data": candles,
-        "options": {
-            "upColor": COLOR_BULL,
-            "downColor": COLOR_BEAR,
-            "borderVisible": False,
-            "wickUpColor": COLOR_BULL,
-            "wickDownColor": COLOR_BEAR
-        }
-    }
-]
-
-seriesVolumeChart = [
-    {
-        "type": 'Histogram',
-        "data": volume,
-        "options": {
-            "priceFormat": {
-                "type": 'volume',
+            "timeScale": {
+                "visible": False,
             },
-            "priceScaleId": "" # set as an overlay setting,
-        },
-        "priceScale": {
-            "scaleMargins": {
-                "top": 0,
-                "bottom": 0,
+            "watermark": {
+                "visible": True,
+                "fontSize": 18,
+                "horzAlign": 'left',
+                "vertAlign": 'center',
+                "color": 'rgba(171, 71, 188, 0.7)',
+                "text": 'MACD',
+            }
+        }
+    ]
+    
+    seriesCandlestickChart = [
+        {
+            "type": 'Candlestick',
+            "data": candles,
+            "options": {
+                "upColor": COLOR_BULL,
+                "downColor": COLOR_BEAR,
+                "borderVisible": False,
+                "wickUpColor": COLOR_BULL,
+                "wickDownColor": COLOR_BEAR
+            }
+        }
+    ]
+    
+    seriesVolumeChart = [
+        {
+            "type": 'Histogram',
+            "data": volume,
+            "options": {
+                "priceFormat": {
+                    "type": 'volume',
+                },
+                "priceScaleId": "" # set as an overlay setting,
             },
-            "alignLabels": False
+            "priceScale": {
+                "scaleMargins": {
+                    "top": 0,
+                    "bottom": 0,
+                },
+                "alignLabels": False
+            }
         }
-    }
-]
-
-seriesMACDchart = [
-    {
-        "type": 'Line',
-        "data": macd_fast,
-        "options": {
-            "color": 'blue',
-            "lineWidth": 2
+    ]
+    
+    seriesMACDchart = [
+        {
+            "type": 'Line',
+            "data": macd_fast,
+            "options": {
+                "color": 'blue',
+                "lineWidth": 2
+            }
+        },
+        {
+            "type": 'Line',
+            "data": macd_slow,
+            "options": {
+                "color": 'green',
+                "lineWidth": 2
+            }
+        },
+        {
+            "type": 'Histogram',
+            "data": macd_hist,
+            "options": {
+                "color": 'red',
+                "lineWidth": 1
+            }
         }
-    },
-    {
-        "type": 'Line',
-        "data": macd_slow,
-        "options": {
-            "color": 'green',
-            "lineWidth": 2
+    ]
+    
+    
+    renderLightweightCharts([
+        {
+            "chart": chartMultipaneOptions[0],
+            "series": seriesCandlestickChart
+        },
+        {
+            "chart": chartMultipaneOptions[1],
+            "series": seriesVolumeChart
+        },
+        {
+            "chart": chartMultipaneOptions[2],
+            "series": seriesMACDchart
         }
-    },
-    {
-        "type": 'Histogram',
-        "data": macd_hist,
-        "options": {
-            "color": 'red',
-            "lineWidth": 1
-        }
-    }
-]
-
-
-renderLightweightCharts([
-    {
-        "chart": chartMultipaneOptions[0],
-        "series": seriesCandlestickChart
-    },
-    {
-        "chart": chartMultipaneOptions[1],
-        "series": seriesVolumeChart
-    },
-    {
-        "chart": chartMultipaneOptions[2],
-        "series": seriesMACDchart
-    }
-], 'multipane')
+    ], 'multipane')
