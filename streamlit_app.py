@@ -38,12 +38,12 @@ def read_yf(Ticker):
     except Exception as e:
         print("The error is: ", e)
     if not df.empty:
-        # Create a Date column
-        df['Date'] = df.index.date
         # Drop the Date as index
-        df.reset_index(drop=True, inplace=True)
+        df = df.reset_index()
         # Some data wrangling to match required format
         df.columns = ['time','open','high','low','close','volume']                  # rename columns
+        # Create a Date column
+        df['time'] = df['time'].dt.strftime('%Y-%m-%d')  
         df['color'] = np.where(  df['open'] > df['close'], COLOR_BEAR, COLOR_BULL)  # bull or bear
         df.ta.macd(close='close', fast=6, slow=12, signal=5, append=True)           # calculate macd
         # Added extra columns
