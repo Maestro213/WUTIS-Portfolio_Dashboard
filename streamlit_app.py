@@ -63,7 +63,7 @@ df['color'] = np.where(  df['MACD_6_12_5'] > 0, COLOR_BULL, COLOR_BEAR)  # MACD 
 macd_hist = json.loads(df.rename(columns={"MACD_6_12_5": "value"}).to_json(orient = "records"))
 
 df['returns'] = df.close.pct_change()
-df = dr.dropna()
+df = df.dropna()
 df["cumalative returns"] = (1+df.returns).cumprod()
 ret = (1+df['returns']).prod()-1
 vol = df.returns.std()
