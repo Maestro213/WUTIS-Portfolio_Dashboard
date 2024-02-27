@@ -54,7 +54,7 @@ def read_yf(Ticker):
 
 df = read_yf(Ticker)
 
-
+print(df.head())
 candles = json.loads(df.to_json(orient = "records"))
 volume = json.loads(df.rename(columns={"volume": "value",}).to_json(orient = "records"))
 macd_fast = json.loads(df.rename(columns={"MACDh_6_12_5": "value"}).to_json(orient = "records"))
