@@ -55,7 +55,7 @@ df = pd.concat([df1.Date, df1['Cumulative Return'],df1['SMA-50']],axis = 1).drop
 #######################
 # Dashboard Main Panel
 
-fig = px.line(df, x="Date", y=df.columns, title='WUTIS Portfolio')
+fig = px.line(df, x="Date", y=['Cumulative Return','SMA-50'], title='WUTIS Portfolio')
 fig.show()
 
 col = st.columns((8, 12), gap='medium')
