@@ -65,9 +65,12 @@ with col[0]:
 #######################
 # Plot
 with col[1]:
-    
-
-
-    fig = px.line(df1, x=df1.index, y='Cumulative Return', title='Portfolio Performance')
-    fig.update_xaxes(rangeslider_visible=True)
+    fig = px.line(df, x="Date", y=df1.columns,
+                  #hover_data={"date": "|%B %d, %Y"},
+                  title='custom tick labels with ticklabelmode="period"')
+    fig.update_xaxes(
+        dtick="M1",
+        tickformat="%b\n%Y",
+        ticklabelmode="period")
     fig.show()
+    
