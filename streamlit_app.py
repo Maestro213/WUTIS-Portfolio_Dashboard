@@ -63,6 +63,6 @@ with col[1]:
     
 
 
-    fig = px.line(df1, x=df1.index, y=['Cumulative Return','SMA-50','SMA-200'], title='Portfolio Performance')
+    fig = px.line(df1, x=df1.index, y='Cumulative Return', title='Portfolio Performance')
     fig.update_xaxes(rangeslider_visible=True)
     fig.show()
