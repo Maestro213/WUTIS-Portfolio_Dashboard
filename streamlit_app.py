@@ -36,8 +36,8 @@ df1 = pd.read_csv(r'data/ER.csv',index_col=0)
 df1['SMA-50'] = df1['Close'].rolling(50).mean().dropna()
 df1['SMA-200'] = df1['Close'].rolling(200).mean().dropna()
 
-ret = round((1+df1.Returns).prod()-1,4) * 100 
-vol =  round(df1.Returns.std(),2)
+ret = round((1+df1.Return).prod()-1,4) * 100 
+vol =  round(df1.Return.std(),2)
 rf = 0.04**(1/2)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,2)
 met = pd.DataFrame({"Returns":ret, "Volatility":vol,"Sharpe Ratio": sharpe_ratio},index=[0])
