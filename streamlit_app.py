@@ -54,6 +54,9 @@ met = pd.DataFrame({"Returns":ret, "Volatility":vol,"Sharpe Ratio": sharpe_ratio
 df = pd.concat([df1.Date, df1['Cumulative Return'],df1['SMA-50']],axis = 1).dropna()
 #######################
 # Dashboard Main Panel
+
+fig = px.line(df, x="Date", y=df.columns, title='WUTIS Portfolio')
+fig.show()
 col = st.columns((8, 12), gap='medium')
 with col[0]:
     st.markdown('#### Perfomance')
@@ -69,4 +72,5 @@ with col[1]:
     df = px.data.gapminder().query("continent == 'Oceania'")
     fig = px.line(df, x='year', y='lifeExp', color='country', markers=True)
     fig.show()
-    
+
+
