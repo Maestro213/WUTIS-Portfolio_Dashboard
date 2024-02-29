@@ -56,7 +56,7 @@ var = round( -np.percentile(df1['Cumulative Return'], (100 - 5)),2)
 
 met = pd.DataFrame({"Returns":ret, "Volatility":vol,"Sharpe Ratio": sharpe_ratio, "Maximum Drawdown":max_drawdown, "VaR":var},index=[0])
 
-df = pd.concat([df1.Dare, df1['Cumulative Return'],df1['SMA-50']],axis = 1).dropna()
+df = pd.concat([df1.Date, df1['Cumulative Return'],df1['SMA-50']],axis = 1).dropna()
 #######################
 # Dashboard Main Panel
 col = st.columns((8, 12), gap='medium')
