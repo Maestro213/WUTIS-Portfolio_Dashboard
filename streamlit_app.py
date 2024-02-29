@@ -65,7 +65,7 @@ with col[0]:
 #######################
 # Plot
 with col[1]:
-    fig = px.line(df, x="Date", y=df1.columns,
+    fig = px.line(df1, x="Date", y=df1.columns,
                   #hover_data={"date": "|%B %d, %Y"},
                   title='custom tick labels with ticklabelmode="period"')
     fig.update_xaxes(
