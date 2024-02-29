@@ -32,8 +32,8 @@ def read_yf(Ticker):
     # print('Start date: {}'.format(start_date))
     df = pd.DataFrame()
     try:
-        df = yf.Ticker(Ticker).history(period='6mo')[['Open', 'High', 'Low', 'Close', 'Volume']]
-        
+        #df = yf.Ticker(Ticker).history(period='6mo')[['Open', 'High', 'Low', 'Close', 'Volume']]
+        df = pd.read_csv(r'data/ER.csv')
     except Exception as e:
         print("The error is: ", e)
     if not df.empty:
@@ -53,7 +53,7 @@ def read_yf(Ticker):
 
 df = read_yf(Ticker)
 
-df = pd.read_csv(r'data/ER.csv')
+
     
 #Calculating the Metrics 
 # Calculate the MAs for graphs
