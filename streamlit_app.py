@@ -52,8 +52,8 @@ def read_yf(Ticker):
 
 
 df = read_yf(Ticker)
-if df.empty:
-    df = pd.read_csv(r'data/ER.csv')
+
+df = pd.read_csv(r'data/ER.csv')
     
 #Calculating the Metrics 
 # Calculate the MAs for graphs
