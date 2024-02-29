@@ -70,7 +70,7 @@ with col[0]:
 #######################
 # Plot
 with col[1]:
-    st.line_chart(df, x="Date", y=df.columns, title='WUTIS Portfolio')
+    st.line_chart(df, x="Date", y=df.columns)
     
 
 
