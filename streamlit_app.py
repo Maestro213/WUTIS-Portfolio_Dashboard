@@ -55,7 +55,7 @@ max_drawdown = round(df1["Drawdown"].min(),2)
 var =  -np.percentile(df1['Cumulative Return'], (100 - level))
 met = pd.DataFrame({"Returns":ret, "Volatility":vol,"Sharpe Ratio": sharpe_ratio, "Maximum Drawdown":max_drawdown, "VaR"=var},index=[0])
 
-df = pd.DataFrame([df1['Cumulative Return'],df1['SMA-50']]).dropna()
+df = pd.concat([df1['Cumulative Return'],df1['SMA-50']],1).dropna()
 #######################
 # Dashboard Main Panel
 col = st.columns((8, 12), gap='medium')
