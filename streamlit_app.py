@@ -40,7 +40,7 @@ def read_yf(Ticker):
         # Drop the Date as index
         df = df.reset_index()
         # Some data wrangling to match required format
-        df.columns = ['time','open','high','low','close','volume', 'return', 'cumulative return']                  # rename columns
+        df.columns = ['time','open','high','low','close', 'adj close', 'volume', 'return', 'cumulative return']                  # rename columns
         # Create a Date column
         df['time'] = df['time'].dt.strftime('%Y-%m-%d')  
         df['color'] = np.where(  df['open'] > df['close'], COLOR_BEAR, COLOR_BULL)  # bull or bear
