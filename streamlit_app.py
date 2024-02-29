@@ -30,7 +30,7 @@ COLOR_BEAR = 'rgba(239,83,80,0.9)'  # #ef5350
 
 df1 = pd.read_csv(r'data/ER.csv',index_col=0)
 df1 = df1.reset_index()
-df1['Date']= pd.to_datetime(df1['Date']).date()
+df1['Date']= pd.to_datetime(df1['Date']).dt.date()
 
 
 
