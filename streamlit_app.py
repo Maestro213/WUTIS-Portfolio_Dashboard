@@ -33,7 +33,7 @@ def read_yf(Ticker):
     df = pd.DataFrame()
     try:
         #df = yf.Ticker(Ticker).history(period='6mo')[['Open', 'High', 'Low', 'Close', 'Volume']]
-        df = pd.read_csv(r'data/ER.csv')
+        df = pd.read_csv(r'data/ER.csv',index_col=0)
     except Exception as e:
         print("The error is: ", e)
     if not df.empty:
