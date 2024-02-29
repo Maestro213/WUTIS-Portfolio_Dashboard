@@ -71,7 +71,7 @@ with col[0]:
 # Plot
 with col[1]:
     
-    fig = px.line(df, x="Date", y=df.columns, title='WUTIS Portfolio')
-  
+    df = px.data.gapminder().query("continent == 'Oceania'")
+    fig = px.line(df, x='year', y='lifeExp', color='country', markers=True)
     fig.show()
     
