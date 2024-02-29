@@ -2,12 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pandas_ta as ta
-import streamlit as st
-from streamlit_lightweight_charts import renderLightweightCharts
-import json
 from datetime import datetime
-import altair as alt
-from streamlit_lottie import st_lottie
 import yfinance as yf
 # For plotting
 import plotly.graph_objects as go
