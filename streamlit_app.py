@@ -52,9 +52,17 @@ with col[0]:
                  column_order=("Returns","Volatility","Sharpe Ratio" ),
                  hide_index=True,
                  width=None,)
-    st.dataframe(df.head())
+    st.dataframe(df1.head())
     
 
 #######################
 # Plot
+with col[1]:
+    import plotly.express as px
+    import pandas as pd
 
+
+
+    fig = px.line(df1, x='Date', y=df1[['Cumulative Return','SMA-50','SMA-200']], title='Portfolio Performance')
+    fig.update_xaxes(rangeslider_visible=True)
+    fig.show()
