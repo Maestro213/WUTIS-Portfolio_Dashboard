@@ -62,18 +62,16 @@ df = pd.concat([df1['Cumulative Return'],df1['SMA-50']],axis = 1).dropna()
 col = st.columns((8, 12), gap='medium')
 with col[0]:
     st.markdown('#### Perfomance')
-
-    st.dataframe(met,
-                 column_order=("Returns","Volatility","Sharpe Ratio" ),
-                 hide_index=True,
-                 width=None,)
+    st.dataframe(met, hide_index=True, width=None,)
     st.dataframe(df1.tail(10))
-    
+    fig = px.line(df, x="Date", y=df.columns, title='WUTIS Portfolio')
+    fig.show()
 
 #######################
 # Plot
 with col[1]:
-    fig = px.line(df1, x="Date", y=df.columns, title='WUTIS Portfolio')
+    
+    fig = px.line(df, x="Date", y=df.columns, title='WUTIS Portfolio')
   
     fig.show()
     
