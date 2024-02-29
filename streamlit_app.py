@@ -38,17 +38,24 @@ df1['Date']= pd.to_datetime(df1['Date']).dt.date
 
 
     
-#Calculating the Metrics 
-# Calculate the MAs for graphs
-df1['SMA-50'] = df1['Close'].rolling(50).mean().dropna()
-df1['SMA-200'] = df1['Close'].rolling(200).mean().dropna()
 
+# Calculate the MAs for graphs
+df1['SMA-50'] = df1['Cumulative Return'].rolling(50).mean().dropna()
+df1['SMA-200'] = df1['Cumulative Return'].rolling(200).mean().dropna()
+# calculate the prior peaks for each day in our dataset
+df1["Prior Peak"] = df1['Cumulative Return'].cummax()
+# calculate the drawdown
+df1["Drawdown"] = (df1['Cumulative Return'] - df1["Prior Peak"]) / df1["Prior Peak"]
+#Calculating the Metrics 
 ret = round((1+df1.Return).prod()-1,4) * 100 
 vol =  round(df1.Return.std(),2)
 rf = 0.04**(1/2)
 sharpe_ratio = round((ret-0.04**(1/2))/vol,2)
-met = pd.DataFrame({"Returns":ret, "Volatility":vol,"Sharpe Ratio": sharpe_ratio},index=[0])
+max_drawdown = round(df1["Drawdown"].min(),2)
+var =  -np.percentile(df1['Cumulative Return'], (100 - level))
+met = pd.DataFrame({"Returns":ret, "Volatility":vol,"Sharpe Ratio": sharpe_ratio, "Maximum Drawdown":max_drawdown, "VaR"=var},index=[0])
 
+df = pd.DataFrame([df1['Cumulative Return'],df1['SMA-50']]).dropna()
 #######################
 # Dashboard Main Panel
 col = st.columns((8, 12), gap='medium')
@@ -65,12 +72,7 @@ with col[0]:
 #######################
 # Plot
 with col[1]:
-    fig = px.line(df1, x="Date", y=df1.columns,
-                  #hover_data={"date": "|%B %d, %Y"},
-                  title='custom tick labels with ticklabelmode="period"')
-    fig.update_xaxes(
-        dtick="M1",
-        tickformat="%b\n%Y",
-        ticklabelmode="period")
+    fig = px.line(df1, x="Date", y=df.columns, title='WUTIS Portfolio')
+  
     fig.show()
     
