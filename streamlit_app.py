@@ -12,6 +12,8 @@ import yfinance as yf
 # For plotting
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import plotly.express as px
+import pandas as pd
 
 
 st.set_page_config(layout='wide', page_title='Stock Dashboard', page_icon=':dollar:')
@@ -52,17 +54,15 @@ with col[0]:
                  column_order=("Returns","Volatility","Sharpe Ratio" ),
                  hide_index=True,
                  width=None,)
-    st.dataframe(df1.head())
+    st.dataframe(df1.tail(10))
     
 
 #######################
 # Plot
 with col[1]:
-    import plotly.express as px
-    import pandas as pd
+    
 
 
-
-    fig = px.line(df1, x='Date', y=df1[['Cumulative Return','SMA-50','SMA-200']], title='Portfolio Performance')
+    fig = px.line(df1, x=df1.index, y=['Cumulative Return','SMA-50','SMA-200'], title='Portfolio Performance')
     fig.update_xaxes(rangeslider_visible=True)
     fig.show()
