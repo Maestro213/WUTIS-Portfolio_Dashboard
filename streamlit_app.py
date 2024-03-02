@@ -96,8 +96,8 @@ with col[0]:
 with col[1]:
     st.markdown("Portfolio Perfomance")
     st.line_chart(df, x='Date', y=['WUTIS', 'Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
-    a = alt.Chart(df).mark_area(opacity=1).encode(x='Date', y= 'Equity Research', tooltip=['Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
-    b = alt.Chart(df).mark_area(opacity=0.6).encode(x='Date', y='WUTIS')
+    a = alt.Chart(df).mark_line().encode(x='Date', y= 'Equity Research', tooltip=['Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
+    b = alt.Chart(df).mark_line(opacity=0.6).encode(x='Date', y='WUTIS')
     c = alt.layer(a, b)
     st.altair_chart(c, use_container_width=True)
 
