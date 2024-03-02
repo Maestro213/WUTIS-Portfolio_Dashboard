@@ -87,7 +87,7 @@ col = st.columns((8, 12), gap='medium')
 
 with col[0]:
     st.markdown('#### Perfomance')
-    st.dataframe(met, hide_index=True, width=None,)
+    st.dataframe(met, width=None,)
     st.dataframe(df.tail(10))
  
 
@@ -96,7 +96,7 @@ with col[0]:
 with col[1]:
     st.markdown("Portfolio Perfomance")
     st.line_chart(df, x='Date', y=['WUTIS', 'Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
-    a = alt.Chart(df).mark_area(opacity=1).encode(x='Date', y=['Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
+    a = alt.Chart(df).mark_area(opacity=1).encode(x='Date', y= 'Equity Research', tooltip=['Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
     b = alt.Chart(df).mark_area(opacity=0.6).encode(x='Date', y='WUTIS')
     c = alt.layer(a, b)
     st.altair_chart(c, use_container_width=True)
