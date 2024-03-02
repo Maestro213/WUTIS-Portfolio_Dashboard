@@ -62,7 +62,7 @@ def metrics(df, av_capital = 300000):
     met = pd.DataFrame({"Returns":ret, "Volatility":vol, "Sharpe Ratio": sharpe_ratio, "Maximum Drawdown":max_drawdown, "VaR":var},index=[0])
     return met, df
 
-sp = yf.download("SPY", start = "2023-09-30", end = "2024-03-01").reset_index()
+sp = yf.download("SPY", start = "2023-09-30", end = "2024-03-01")
 sp_met, sp = metrics(sp)
 er_met, df_er = metrics(df_er)
 gm_met, df_gm = metrics(df_gm)
@@ -93,7 +93,7 @@ with col[0]:
 #######################
 # Plot
 with col[1]:
-    st.line_chart(df, x="Date", y=["WUTIS", "Equity Research", "Global Markets", "Algorithmic Trading",'S&P500 Benchmark'])
+    st.line_chart(df, x=df.index(), y=["WUTIS", "Equity Research", "Global Markets", "Algorithmic Trading",'S&P500 Benchmark'])
     
 
 
