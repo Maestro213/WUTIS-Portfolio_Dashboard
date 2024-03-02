@@ -60,7 +60,7 @@ def metrics(df, av_capital = 300000):
     var = round( -np.percentile(df['Return'], (100 - 5)),2)
     
     met = pd.DataFrame({"Returns":ret, "Volatility":vol, "Sharpe Ratio": sharpe_ratio, "Maximum Drawdown":max_drawdown, "VaR":var},index=[0])
-    return df,met
+    return met, df
 
 sp = yf.download("SPY", start = "2023-09-30", end = "2024-03-01").reset_index()
 sp_met, sp = metrics(sp)
