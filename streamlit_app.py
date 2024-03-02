@@ -98,7 +98,7 @@ with col[1]:
     st.line_chart(df, x='Date', y=['WUTIS', 'Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
     a = alt.Chart(df).mark_line().encode(x='Date', y= 'Equity Research', tooltip=['Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
     b = alt.Chart(df).mark_line(opacity=0.6).encode(x='Date', y='WUTIS')
-    c = alt.layer(a, b)
+    c = alt.layer(a, b).resolve_scale(y='independent')
     st.altair_chart(c, use_container_width=True)
 
 
