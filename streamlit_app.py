@@ -34,8 +34,8 @@ df_algo = pd.read_csv(r'data/Algo.csv',index_col=0)
     
 def metrics(df, av_capital = 300000):
     #this function calculate the metrics such as: Ann Ret, Ann Volatility, Sharpe ration, Maximum Drawdown, VaR
-    
-    df['Date']= pd.to_datetime(df.reset_index()['Date']).dt.date
+    df.reset_index(inplace=True)
+    df['Date']= pd.to_datetime(df['Date']).dt.date
     df['Return Pct'] = df["Adj Close"].pct_change()
     df['Return Pct'][0] = 0
     df['Return'] = df['Return Pct'] * av_capital
@@ -71,6 +71,7 @@ algo_met, df_algo = metrics(df_algo)
 
 df = pd.concat([df_er.Date, df_er['Cumulative Return'],df_gm['Cumulative Return'],df_algo['Cumulative Return'],sp['Cumulative Return']],axis = 1).dropna()
 df = df.set_axis(["Date","Equity Research", "Global Markets", "Algorithmic Trading",'S&P500 Benchmark'],axis=1)
+
 ## Add to the whole portfolio
 df["WUTIS"] = df[["Equity Research", "Global Markets", "Algorithmic Trading"]].sum(axis=1)
 met = pd.concat([er_met, gm_met, algo_met,sp_met],axis = 0)
