@@ -94,7 +94,7 @@ with col[0]:
 #######################
 # Plot
 with col[1]:
-    st.line_chart(df, x="Date, y=["WUTIS", "Equity Research", "Global Markets", "Algorithmic Trading",'S&P500 Benchmark'])
+    st.line_chart(df, x='Date', y=['WUTIS', 'Equity Research', 'Global Markets', 'Algorithmic Trading','S&P500 Benchmark'])
     
 
 
