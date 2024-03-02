@@ -34,7 +34,8 @@ df_algo = pd.read_csv(r'data/Algo.csv',index_col=0)
     
 def metrics(df, av_capital = 300000):
     #this function calculate the metrics such as: Ann Ret, Ann Volatility, Sharpe ration, Maximum Drawdown, VaR
-    df['Date']= pd.to_datetime(df['Date']).dt.date
+    
+    df['Date']= pd.to_datetime(df.reset_index()['Date']).dt.date
     df['Return Pct'] = df["Adj Close"].pct_change()
     df['Return Pct'][0] = 0
     df['Return'] = df['Return Pct'] * av_capital
