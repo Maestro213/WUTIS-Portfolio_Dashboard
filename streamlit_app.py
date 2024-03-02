@@ -74,7 +74,7 @@ df = df.set_axis(["Date","Equity Research", "Global Markets", "Algorithmic Tradi
 ## Add to the whole portfolio
 df["WUTIS"] = df[["Equity Research", "Global Markets", "Algorithmic Trading"]].sum(axis=1)
 met = pd.concat([er_met, gm_met, algo_met,sp_met],axis = 0)
-met = met.set_axis(["Date","Equity Research", "Global Markets", "Algorithmic Trading",'S&P500 Benchmark'],axis=0)
+met = met.set_axis(["Equity Research", "Global Markets", "Algorithmic Trading",'S&P500 Benchmark'],axis=0)
 #######################
 # Dashboard Main Panel
 
