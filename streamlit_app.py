@@ -8,7 +8,7 @@ import yfinance as yf
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.express as px
-
+import altair as alt
 
 
 
@@ -94,7 +94,11 @@ with col[0]:
 #######################
 # Plot
 with col[1]:
-    st.line_chart(df, x='Date', y=['WUTIS', 'Equity Research', 'Global Markets', 'Algorithmic Trading','S&P500 Benchmark'])
-    
+    st.markdown("Portfolio Perfomance")
+    st.line_chart(df, x='Date', y=['WUTIS', 'Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
+    a = alt.Chart(df).mark_area(opacity=1).encode(x='Date', y=['Equity Research', 'Global Markets', 'Algorithmic Trading', 'S&P500 Benchmark'])
+    b = alt.Chart(df).mark_area(opacity=0.6).encode(x='Date', y='WUTIS')
+    c = alt.layer(a, b)
+    st.altair_chart(c, use_container_width=True)
 
 
